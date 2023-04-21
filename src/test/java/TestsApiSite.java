@@ -2,6 +2,7 @@ import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 
@@ -49,4 +50,32 @@ public class TestsApiSite {
                 .statusCode(201)
                 .body("email", is("eve.holt@reqres.in"));
     }
+    @Test
+    void checkWitchSchemasInfoUser(){
+        given()
+                .log().uri()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("https://reqres.in/api/unknown/2")
+                .then()
+                .log().body()
+                .statusCode(200)
+                .body("data.name", is("fuchsia rose"))
+                .body(matchesJsonSchemaInClasspath("shemas.json"));
+    }
+    @Test
+    void checkLoginUser(){
+        String bodyloginUser = " { \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" } ";
+        given()
+                .log().uri()
+                .contentType(ContentType.JSON)
+                .body(bodyloginUser)
+                .when()
+                .post("https://reqres.in/api/login")
+                .then()
+                .log().body()
+                .statusCode(200)
+                .body("token", is("QpwL5tke4Pnpja7X4"));
+    }
+
 }
