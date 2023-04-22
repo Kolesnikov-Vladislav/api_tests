@@ -44,3 +44,9 @@ test {
     useJUnitPlatform()
     systemProperties(System.getProperties())
 }
+
+task critical(type: Test) {
+    useJUnitPlatform {
+        includeTags("critical")
+    }
+}
