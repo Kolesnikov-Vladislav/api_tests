@@ -1,23 +1,23 @@
 import io.restassured.http.ContentType;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+
 import static io.restassured.RestAssured.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 
 public class TestsApiSite {
     @Test
-    void checkPageListUserAPI(){
+    void checkPageListUserAPI() {
         given()
                 .when()
-                        .get("https://reqres.in/api/users?page=2")
+                .get("https://reqres.in/api/users?page=2")
                 .then()
-                        .body("page", is(2))
-                        .body("support.url", is("https://reqres.in/#support-heading"));
+                .body("page", is(2))
+                .body("support.url", is("https://reqres.in/#support-heading"));
     }
+
     @Test
-    void checkCreateUserAPI(){
+    void checkCreateUserAPI() {
         String body = " { \"name\": \"morpheus\", \"job\": \"leader\", \"id\": \"552\", \"createdAt\": \"2023-04-21T11:44:02.077Z\" } ";
 
         given()
@@ -26,14 +26,15 @@ public class TestsApiSite {
                 .contentType(ContentType.JSON)
                 .when()
                 .post("https://reqres.in/api/users")
-                        .then()
-                        .log().body()
-                        .statusCode(201)
-                        .body("job", is("leader"))
-                        .body("name", is("morpheus"));
+                .then()
+                .log().body()
+                .statusCode(201)
+                .body("job", is("leader"))
+                .body("name", is("morpheus"));
     }
+
     @Test
-    void checkUpdUser(){
+    void checkUpdUser() {
         String body = " {\n" +
                 "    \"email\": \"eve.holt@reqres.in\",\n" +
                 "    \"password\": \"cityslicka\"\n" +
@@ -50,8 +51,9 @@ public class TestsApiSite {
                 .statusCode(201)
                 .body("email", is("eve.holt@reqres.in"));
     }
+
     @Test
-    void checkWitchSchemasInfoUser(){
+    void checkWitchSchemasInfoUser() {
         given()
                 .log().uri()
                 .contentType(ContentType.JSON)
@@ -63,8 +65,9 @@ public class TestsApiSite {
                 .body("data.name", is("fuchsia rose"))
                 .body(matchesJsonSchemaInClasspath("shemas.json"));
     }
+
     @Test
-    void checkLoginUser(){
+    void checkLoginUser() {
         String bodyloginUser = " { \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" } ";
         given()
                 .log().uri()
