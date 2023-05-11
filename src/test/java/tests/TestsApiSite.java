@@ -47,7 +47,7 @@ public class TestsApiSite {
     }
 
     @Test
-    void checkWitchSchemasInfoUser() {
+    void checkWithSchemasInfoUser() {
         given()
                 .log().uri()
                 .contentType(ContentType.JSON)
@@ -94,7 +94,7 @@ public class TestsApiSite {
     }
 
     @Test
-    void checkCreateUserAPIWitchPojo() {
+    void checkCreateUserAPIWithPojo() {
         BodyCreateUserWitchPojo bodyCreateUserWitchPojo = new BodyCreateUserWitchPojo();
         bodyCreateUserWitchPojo.setName("morpheus");
         bodyCreateUserWitchPojo.setJob("leader");
